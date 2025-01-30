@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDX FREE WEB MOD</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .box {
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+        .glow-green {
+            color: lime;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 0 0 10px lime;
+        }
+        .glow-red {
+            color: red;
+            font-size: 25px;
+            font-weight: bold;
+            text-shadow: 0 0 15px red;
+        }
+        .image-box img {
+            width: 100px;
+            height: 100px;
+        }
+        .button {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: 2px solid cyan;
+            font-size: 20px;
+            cursor: pointer;
+            margin: 10px;
+            transition: 0.3s;
+        }
+        .button:hover {
+            box-shadow: 0 0 15px cyan;
+        }
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: white;
+            color: black;
+            text-align: center;
+            border-radius: 5px;
+            padding: 15px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        .show-toast {
+            visibility: visible;
+            animation: fadeout 3s forwards;
+        }
+        @keyframes fadeout {
+            0% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Image Section -->
+        <div class="box image-box">
+            <img src="default_image.png" alt="Logo">
+        </div>
+
+        <!-- Title Section -->
+        <div class="box glow-green">
+            <h2>RDX FREE WEB MOD</h2>
+        </div>
+
+        <!-- Period Section -->
+        <div class="box glow-green">
+            <strong>PERIOD:</strong> <span id="textview3">Loading...</span>
+        </div>
+
+        <!-- Timer Section -->
+        <div class="box glow-green">
+            <strong>TIMER:</strong> <span id="textview5">00 : 00</span>
+        </div>
+
+        <!-- Prediction Result -->
+        <div class="box glow-red">
+            <h3 id="textview6">Waiting...</h3>
+        </div>
+
+        <!-- Buttons -->
+        <button class="button" id="button1">PREDICT</button>
+        <button class="button" id="telegram">TELEGRAM</button>
+
+    </div>
+
+    <div id="toast" class="toast">PREDICTION DONE</div>
+
+    <script>
+        let lastPeriod = null;
+
+        function updateTimer() {
+            const now = new Date();
+            const seconds = now.getUTCSeconds();
+            const remainingSeconds = 60 - seconds;
+            const minutes = now.getUTCMinutes();
+            const totalMinutes = now.getUTCHours() * 60 + minutes;
+
+            // Generate Period
+            const periodValue = new Date().toISOString().slice(0, 10).replace(/-/g, '') + "1000" + (10001 + totalMinutes);
+            document.getElementById("textview3").innerText = periodValue;
+
+            // Update Timer Display
+            document.getElementById("textview5").innerText = `   00  :  ${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+
+            // Reset prediction when period updates
+            if (lastPeriod !== periodValue) {
+                document.getElementById("textview6").innerText = "Waiting...";
+                lastPeriod = periodValue;
+            }
+        }
+
+        setInterval(updateTimer, 1000);
+
+        document.getElementById("button1").addEventListener("click", function () {
+            const predictions = ["BIG", "SMALL", "BIG", "SMALL", "BIG", "BIG", "SMALL", "SMALL"];
+            const currentPeriod = document.getElementById("textview3").innerText;
+            const lastPrediction = document.getElementById("textview6").innerText;
+
+            if (lastPeriod === currentPeriod && lastPrediction !== "Waiting...") {
+                document.getElementById("textview6").innerText = "RUKJA MADARCHOD NXT PERIOD AANE DE";
+            } else {
+                const result = predictions[Math.floor(Math.random() * predictions.length)];
+                document.getElementById("textview6").innerText = result;
+                showToast("PREDICTION DONE");
+            }
+        });
+
+        document.getElementById("telegram").addEventListener("click", function () {
+            window.open("https://t.me/rdxpredictionssureshot", "_blank");
+        });
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.classList.add("show-toast");
+            setTimeout(() => {
+                toast.classList.remove("show-toast");
+            }, 3000);
+        }
+
+    </script>
+
+</body>
+</html>
