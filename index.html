@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDX Free Web Mod</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .box {
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+        .glow-green {
+            color: #00FF00;
+            text-shadow: 0 0 10px #00FF00;
+        }
+        .glow-red {
+            color: #FF0000;
+            text-shadow: 0 0 10px #FF0000;
+        }
+        .image-box img {
+            width: 100px;
+            height: 100px;
+        }
+        .button {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: 2px solid cyan;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 5px;
+        }
+        .button:hover {
+            box-shadow: 0 0 15px cyan;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Image Section -->
+        <div class="box image-box">
+            <img src="default_image.png" alt="Logo">
+        </div>
+
+        <!-- Title Section -->
+        <div class="box">
+            <h2 class="glow-green">RDX FREE WEB MOD</h2>
+        </div>
+
+        <!-- Period Section -->
+        <div class="box">
+            <strong class="glow-green">PERIOD:</strong> 
+            <span id="textview3" class="glow-green">Loading...</span>
+        </div>
+
+        <!-- Timer Section -->
+        <div class="box">
+            <strong class="glow-green">TIMER:</strong> 
+            <span id="textview5" class="glow-green">00 : 00</span>
+        </div>
+
+        <!-- Prediction Text -->
+        <div class="box">
+            <h3 id="textview6" class="glow-red">Waiting...</h3>
+        </div>
+
+        <!-- Buttons -->
+        <div class="box">
+            <button id="button1" class="button">PREDICT</button>
+            <button id="telegram" class="button">TELEGRAM</button>
+        </div>
+
+    </div>
+
+    <script>
+        function updateTimer() {
+            let now = new Date();
+            let seconds = now.getUTCSeconds();
+            let remainingSeconds = 60 - seconds;
+            let minutes = now.getUTCMinutes();
+            let totalMinutes = now.getUTCHours() * 60 + minutes;
+            
+            // Update period number
+            document.getElementById("textview3").innerText = new Date().toISOString().slice(0, 10).replace(/-/g, '') +
+                "1000" + (10001 + totalMinutes);
+
+            // Update countdown timer
+            document.getElementById("textview5").innerText = `   00  :  ${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        setInterval(updateTimer, 1000);
+
+        let lastPeriod = "";
+        let predictions = ["BIG 1-4", "SMALL 6-9", "BIG 1-2", "SMALL 6-7", "BIG 3-2", "BIG 3-4", "SMALL 7-8", "SMALL 7-9"];
+
+        document.getElementById("button1").addEventListener("click", function () {
+            let currentPeriod = document.getElementById("textview3").innerText;
+
+            if (currentPeriod === lastPeriod) {
+                document.getElementById("textview6").innerText = "RUKJA MADARCHOD NXT PERIOD AANE DE";
+            } else {
+                let randomPrediction = predictions[Math.floor(Math.random() * predictions.length)];
+                document.getElementById("textview6").innerText = randomPrediction;
+                alert("PREDICTION DONE");
+                lastPeriod = currentPeriod;
+            }
+        });
+
+        document.getElementById("telegram").addEventListener("click", function () {
+            window.open("https://t.me/rdxpredictionssureshot", "_blank");
+        });
+
+        updateTimer();
+    </script>
+
+</body>
+</html>
